@@ -24,6 +24,6 @@ class Obstacle():
         self.upperRect = self.upperRect.move([-speed,0])
 
     def randomizeGap(self):
-        self.gapY = randint(0,400)
+        self.gapY = randint(0,500 - self.gapHeight)
         self.lowerRect.y = self.gapY + self.gapHeight
         self.upperRect.y = self.gapY - self.upperRect.height

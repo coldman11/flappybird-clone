@@ -42,7 +42,7 @@ while 1:
         if bird.rect.y > 500 or bird.rect.y < 0:
             running = False
 
-        obstacle.move(3)
+        obstacle.move(6)
         if obstacle.getX() < -50:
             obstacle.setX(550)
             obstacle.randomizeGap()
