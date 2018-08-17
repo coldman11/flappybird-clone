@@ -7,19 +7,18 @@ pygame.init()
 running = True
 screen = pygame.display.set_mode((500, 500))
 
-obstacleimg = pygame.image.load('obstacle.png')
-obstaclerect = obstacleimg.get_rect()
-obstaclerect.x = 450
-obstaclerect.y = randint(250,500)
-
-# create bird
-
 bird = Bird()
+bird.rect.x = 50
+bird.rect.y = 250
 obstacle = Obstacle()
 obstacle.setX(400)
 
-jump = 100
-flyingSpeed = 3
+myfont = pygame.font.SysFont("monospace", 40)
+
+# render text
+points = 0
+
+
 
 clock=pygame.time.Clock()
 
@@ -40,11 +39,14 @@ while 1:
         if bird.vy <= 10:
             bird.vy += 1
         bird.rect = bird.rect.move([0,bird.vy])
+        if bird.rect.y > 500 or bird.rect.y < 0:
+            running = False
 
         obstacle.move(3)
         if obstacle.getX() < -50:
             obstacle.setX(550)
             obstacle.randomizeGap()
+            points += 1
 
         if bird.rect.colliderect(obstacle.lowerRect) or bird.rect.colliderect(obstacle.upperRect):
             running = False
@@ -53,6 +55,8 @@ while 1:
         screen.blit(bird.img, bird.rect)
         screen.blit(obstacle.upperImg, obstacle.upperRect)
         screen.blit(obstacle.lowerImg, obstacle.lowerRect)
+        label = myfont.render(str(points), 1, (255,255,0))
+        screen.blit(label, (0, 0))
         
         pygame.display.flip()
 
