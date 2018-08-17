@@ -1,6 +1,7 @@
 import sys, pygame
 from random import randint
 from bird import Bird
+from obstacle import Obstacle
 
 pygame.init()
 running = True
@@ -14,6 +15,8 @@ obstaclerect.y = randint(250,500)
 # create bird
 
 bird = Bird()
+obstacle = Obstacle()
+obstacle.setX(400)
 
 jump = 100
 flyingSpeed = 3
@@ -34,26 +37,23 @@ while 1:
                 if event.key == pygame.K_UP:
                     bird.vy = -10
 
-        #keys = pygame.key.get_pressed()  #checking pressed keys
-        
-        #if keys[pygame.K_UP]:
-            #birdrect = birdrect.move([0,-jump])
         if bird.vy <= 10:
             bird.vy += 1
         bird.rect = bird.rect.move([0,bird.vy])
-        #obstaclerect = obstaclerect.move([-flyingSpeed,0])
 
-        #if obstaclerect.x < 0:
-            #obstaclerect.x = 500
-            #obstaclerect.y = randint(250,500)
+        obstacle.move(3)
+        if obstacle.getX() < -50:
+            obstacle.setX(550)
+            obstacle.randomizeGap()
 
-        #if birdrect.colliderect(obstaclerect):
-            #running = False
+        if bird.rect.colliderect(obstacle.lowerRect) or bird.rect.colliderect(obstacle.upperRect):
+            running = False
 
-        
         screen.fill((0,0,0))
         screen.blit(bird.img, bird.rect)
-        #screen.blit(obstacleimg, obstaclerect)
+        screen.blit(obstacle.upperImg, obstacle.upperRect)
+        screen.blit(obstacle.lowerImg, obstacle.lowerRect)
+        
         pygame.display.flip()
 
 

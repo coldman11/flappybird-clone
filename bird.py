@@ -5,4 +5,3 @@ class Bird():
         self.img = pygame.image.load('redbird-midflap.png')
         self.rect = self.img.get_rect()
         self.vy = 3
-
